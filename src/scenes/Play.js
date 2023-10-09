@@ -22,13 +22,13 @@ class Play extends Phaser.Scene{
         this.add.existing(this.player);
     }
     update(time){
-        // var blinkInterval = 1000; // Blink interval in milliseconds
-        // var lastBlinkTime = 0;
+        var blinkInterval = 1000; // Blink interval in milliseconds
+        var lastBlinkTime = 0;
         // Blink the square at the specified interval
-        // if (time - this.lastBlinkTime > this.blinkInterval) {
-        //     this.player.visible = !this.player.visible; // Toggle visibility
-        //     this.lastBlinkTime = time;
-        // }
+        if (time - lastBlinkTime > blinkInterval) {
+            this.player.visible = !this.player.visible; // Toggle visibility
+            lastBlinkTime = time;
+        }
         // this.directions = new Phaser.Math.Vector2(0)
         // if(this.cursors.left.isDown){
         //     this.directions.x -=1
