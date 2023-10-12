@@ -4,36 +4,20 @@ class Play extends Phaser.Scene{
         this.VEL=100;
     }
     preload(){
+        this.load.path = './assets/'
+            this.load.image('slug', 'banaslug.png')
             
     }
     create(){
         var player;
-        var blinkInterval = 500; // Blink interval in milliseconds
-        var lastBlinkTime = 0;
-        // Create a square character placeholder
-        this.player = new Phaser.GameObjects.Rectangle(
-            this,
-            100,    // x position
-            100,    // y position
-            25,     // width
-            25,     // height
-            0x00ff00 // fill color
-        );
-        this.physics.add.existing(this.player);
-        this.add.existing(this.player);
+        
+        this.player = this.physics.add.sprite( 100, 100, 'slug',)    
 
         this.cursors = this.input.keyboard.createCursorKeys()
         
     }
     update(time){
-        // Probably change this to a tween
-        var blinkInterval = 1000; // Blink interval in milliseconds
-        var lastBlinkTime = 0;
-        // Blink the square at the specified interval
-        if (time - lastBlinkTime > blinkInterval) {
-            this.player.visible = !this.player.visible; // Toggle visibility
-            lastBlinkTime = time;
-        }
+        
         this.directions = new Phaser.Math.Vector2(0)
         if(this.cursors.left.isDown){
             this.directions.x -=1
@@ -48,7 +32,6 @@ class Play extends Phaser.Scene{
             this.directions.y += 1
         }
         this.directions.normalize()
-        // need sprite
-        // this.player.setVelocity(this.VEL * this.directions.x, this.VEL * this.directions.y)
+        this.player.setVelocity(this.VEL * this.directions.x, this.VEL * this.directions.y)
     }
 }
