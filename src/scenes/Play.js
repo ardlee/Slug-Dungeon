@@ -39,6 +39,9 @@ class Play extends Phaser.Scene{
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         // make the camera follow the player
         this.cameras.main.startFollow(this.player);
+
+        // player will collide with the level tiles 
+        this.physics.add.collider(groundLayer, this.player);
     }
     update(time){
         
