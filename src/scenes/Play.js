@@ -5,20 +5,40 @@ class Play extends Phaser.Scene{
     }
     preload(){
         this.load.path = './assets/'
-            this.load.image('slug', 'banaslug.png')
+        this.load.image('slug', 'banaslug.png');
+        this.load.tilemapTiledJSON('map1', 'tilemap.json');
+        this.load.spritesheet('tilesheet', 'tilesheet.png', { frameWidth: 128, frameHeight: 128 });
             
     }
     create(){
+
+        const camera = this.cameras.main;
+        
+        map = this.make.tilemap({ key: 'map1' });
+        // tiles for the ground layer
+        var levelTiles = map.addTilesetImage('tilesheet');
+        wallLayer = map.createLayer('Background', levelTiles, 0, 0);
+        groundLayer = map.createLayer('Terrain', levelTiles, 0, 0);
+
+        // the player will collide with this layer
+        groundLayer.setCollisionByExclusion([-1]);
+
         var player;
         
-        this.player = this.physics.add.sprite( 700, 320, 'slug',)    
+        this.player = this.physics.add.sprite( 300, 200, 'slug',)    
 
         this.cursors = this.input.keyboard.createCursorKeys()
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        
+
+        // Keep the image anchored to the top right corner during camera scroll
+        this.cameras.main.scrollX = 0; // Set the initial scroll position to 0
+        this.cameras.main.scrollY = 0;
+        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        // make the camera follow the player
+        this.cameras.main.startFollow(this.player);
     }
     update(time){
         

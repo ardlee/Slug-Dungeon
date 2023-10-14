@@ -1,3 +1,7 @@
+var map;
+var groundLayer;
+var wallLayer;
+
 let config = {
     type: Phaser.CANVAS,
     // width: 640,
@@ -5,6 +9,7 @@ let config = {
     allign: "center",
     width: 1500,
     height: 722,
+    pixelArt: true,
     scene: [ Play ],
     physics: {
         default: "arcade",
@@ -23,4 +28,4 @@ let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
 
 // reserve keyboard vars
-let keySPACE,keyI, keyW, keyA, keyS, keyD, keyESC, keyENTER, mouseClick;
+let keySPACE, keyI, keyW, keyA, keyS, keyD, keyESC, keyENTER, mouseClick;
