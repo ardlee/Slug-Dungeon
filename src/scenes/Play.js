@@ -25,8 +25,8 @@ class Play extends Phaser.Scene{
 
         var player;
         
-        this.player = this.physics.add.sprite( 300, 200, 'slug',)    
-
+        this.player = this.physics.add.sprite( 300, 200, 'slug',)  
+            
         this.cursors = this.input.keyboard.createCursorKeys()
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -42,6 +42,14 @@ class Play extends Phaser.Scene{
 
         // player will collide with the level tiles 
         this.physics.add.collider(groundLayer, this.player);
+        //gravity
+        this.physics.world.gravity.y = 1000;
+        this.physics.world.enable(this.player);
+        // this.physics.world.createDebugGraphic();
+
+        this.player.body.setSize(this.player.width -50, this.player.height);
+
+
     }
     update(time){
 
@@ -55,12 +63,16 @@ class Play extends Phaser.Scene{
         if(keyA.isDown){
             this.player.angle = 0;
             this.player.flipX = true;
-            this.directions.x -=1;
+            this.player.body.setVelocityX(-100);
         }
         else if(keyD.isDown){
             this.player.angle = 0;
             this.player.flipX = false;
-            this.directions.x += 1;
+            this.player.body.setVelocityX(100);
+        }
+        // stop player from sliding if not moving
+        else {
+            this.player.body.velocity.x = 0;
         }
 
         // making up and down only possible against walls
@@ -69,24 +81,47 @@ class Play extends Phaser.Scene{
         
         // if(!onWall) player.body.setAllowGravity(true)
         
-        // player will not fall off walls
-        if(keyW.isDown){
+        // player will jump up if on the floor
+        if (keyW.isDown && this.player.body.onFloor()) {
+            this.player.setVelocityY(-500);     
+        }
+        else if (keyW.isDown && this.player.body.blocked.right){
             this.player.angle = -90;
-            this.directions.y -=1;
+            this.player.setVelocityY(-100);
         }
-        if(keyW.isDown && this.player.flipX){
+        else if (keyW.isDown && this.player.body.blocked.left){
             this.player.angle = 90;
-            this.directions.y -=1;
+            this.player.setVelocityY(-100);
         }
-        if(keyS.isDown){
-            this.player.angle = 90;
-            this.directions.y += 1;
-        }
-        if(keyS.isDown && this.player.flipX){
+        else 
+            this.player.angle = 0;
+        
+        //face correctly when pushing against wall while not climbing, makes it look more slug like
+        if ( this.player.body.blocked.right && !this.player.body.onFloor()){
             this.player.angle = -90;
-            this.directions.y += 1;
         }
-        this.directions.normalize()
-        this.player.setVelocity(this.VEL * this.directions.x, this.VEL * this.directions.y)
+        else if ( this.player.body.blocked.left && !this.player.body.onFloor()){
+            this.player.angle = 90;
+        }
+        
+
+        // if(keyW.isDown){
+        //     this.player.angle = -90;
+        //     this.directions.y -=1;
+        // }
+        // if(keyW.isDown && this.player.flipX){
+        //     this.player.angle = 90;
+        //     this.directions.y -=1;
+        // }
+        // if(keyS.isDown){
+        //     this.player.angle = 90;
+        //     this.directions.y += 1;
+        // }
+        // if(keyS.isDown && this.player.flipX){
+        //     this.player.angle = -90;
+        //     this.directions.y += 1;
+        // }
+        // this.directions.normalize()
+        // this.player.setVelocity(this.VEL * this.directions.x, this.VEL * this.directions.y)
     }
 }
