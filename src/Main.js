@@ -16,7 +16,7 @@ let config = {
         arcade: {  
         }
     },
-    scene: [ Play ]
+    scene: [ Title, Play, End ]
 }
  
 let game = new Phaser.Game(config);

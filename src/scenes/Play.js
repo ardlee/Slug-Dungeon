@@ -44,6 +44,10 @@ class Play extends Phaser.Scene{
         this.physics.add.collider(groundLayer, this.player);
     }
     update(time){
+
+        if (this.player.x > game.config.width + 500) {
+            this.scene.start('end');
+        }
         
         this.directions = new Phaser.Math.Vector2(0)
         // later put another && condition where player cant go left or right if next to wall or on wall
