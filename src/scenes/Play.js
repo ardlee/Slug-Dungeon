@@ -2,18 +2,20 @@ class Play extends Phaser.Scene{
     constructor() {
         super({key: 'playScene'})
         this.VEL=100;
+        this.keyLocked = true;
+
     }
     preload(){
         this.load.path = './assets/'
         this.load.image('slug', 'banaslug.png');
+        this.load.image('key', 'key.png'); 
         this.load.tilemapTiledJSON('map1', 'tilemap.json');
         this.load.spritesheet('tilesheet', 'tilesheet.png', { frameWidth: 128, frameHeight: 128 });
             
     }
     create(){
 
-        const camera = this.cameras.main;
-        
+        const camera = this.cameras.main;        
         map = this.make.tilemap({ key: 'map1' });
         // tiles for the ground layer
         var levelTiles = map.addTilesetImage('tilesheet');
@@ -24,9 +26,14 @@ class Play extends Phaser.Scene{
         groundLayer.setCollisionByExclusion([-1]);
 
         var player;
+        var key; 
         
         this.player = this.physics.add.sprite( 300, 200, 'slug',)  
-            
+        this.key = this.physics.add.sprite(200, 1000, 'key',); 
+        // Lock the key in place from the start
+        this.physics.add.collider(this.player, this.key, this.collisionCallback, null, this);
+        
+        
         this.cursors = this.input.keyboard.createCursorKeys()
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -42,18 +49,32 @@ class Play extends Phaser.Scene{
 
         // player will collide with the level tiles 
         this.physics.add.collider(groundLayer, this.player);
+
+        // key will collide with the level tiles
+        this.physics.add.collider(groundLayer, this.key);
+
+
         //gravity
         this.physics.world.gravity.y = 1000;
         this.physics.world.enable(this.player);
         // this.physics.world.createDebugGraphic();
 
         this.player.body.setSize(this.player.width -50, this.player.height);
+        //this.key.body.setSize(this.key.width -50, this.player.height); 
 
 
     }
     update(time){
 
-        if (this.player.x > game.config.width + 500) {
+        // Use the overlap method to check for overlap between player and key
+        if (this.physics.world.overlap(this.player, this.key)) {
+            // Handle the overlap
+            this.key.destroy();
+            this.keyLocked = false;
+        }
+
+
+        if (this.player.x > game.config.width + 500 && this.keyLocked == false) {
             this.scene.start('end');
         }
         
