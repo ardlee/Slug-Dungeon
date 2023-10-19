@@ -1,11 +1,11 @@
-** Brayden Smith, Danny Chan, Arthur Lee, Jose Nadales De Marcos, Brent Chou **  
+**Brayden Smith, Danny Chan, Arthur Lee, Jose Nadales De Marcos, Brent Chou**  
   
-** instructions **  
+**instructions**  
 - Use W key to jump and climb walls
 - Use A and D keys to move left and right
 - Find the key and open the gate to the treasure room
 
-** known bugs **
+**known bugs**
 - if falling fast enough, it is possible to fall through map although unlikely  
 if happens please just refresh the page  
   
