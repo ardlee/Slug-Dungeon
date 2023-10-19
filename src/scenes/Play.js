@@ -11,7 +11,9 @@ class Play extends Phaser.Scene{
         this.load.image('key', 'key.png');
         this.load.tilemapTiledJSON('map1', 'tilemap.json');
         this.load.spritesheet('tilesheet', 'tilesheet.png', { frameWidth: 128, frameHeight: 128 });
-            
+
+        // audio created from https://sfxr.me/
+        this.load.audio('keyPickup', 'pickupSound.wav');
     }
     create(){
 
@@ -73,6 +75,7 @@ class Play extends Phaser.Scene{
         if (this.physics.world.overlap(this.player, this.key)) {
             // Handle the overlap
             this.physics.world.removeCollider(gatecollide);
+            this.sound.play('keyPickup');
             this.key.destroy();
             this.keyLocked = false;
         }
