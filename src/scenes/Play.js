@@ -8,7 +8,7 @@ class Play extends Phaser.Scene{
     preload(){
         this.load.path = './assets/'
         this.load.image('slug', 'banaslug.png');
-        this.load.image('key', 'key.png'); 
+        this.load.image('key', 'key.png');
         this.load.tilemapTiledJSON('map1', 'tilemap.json');
         this.load.spritesheet('tilesheet', 'tilesheet.png', { frameWidth: 128, frameHeight: 128 });
             
@@ -21,9 +21,11 @@ class Play extends Phaser.Scene{
         var levelTiles = map.addTilesetImage('tilesheet');
         wallLayer = map.createLayer('Background', levelTiles, 0, 0);
         groundLayer = map.createLayer('Terrain', levelTiles, 0, 0);
+        gateLayer = map.createLayer('Gate', levelTiles, 0, 0);
 
         // the player will collide with this layer
         groundLayer.setCollisionByExclusion([-1]);
+        gateLayer.setCollisionByExclusion([-1]);
 
         var player;
         var key; 
@@ -53,6 +55,7 @@ class Play extends Phaser.Scene{
         // key will collide with the level tiles
         this.physics.add.collider(groundLayer, this.key);
 
+        gatecollide = this.physics.add.collider(gateLayer, this.player);
 
         //gravity
         this.physics.world.gravity.y = 1000;
@@ -69,6 +72,7 @@ class Play extends Phaser.Scene{
         // Use the overlap method to check for overlap between player and key
         if (this.physics.world.overlap(this.player, this.key)) {
             // Handle the overlap
+            this.physics.world.removeCollider(gatecollide);
             this.key.destroy();
             this.keyLocked = false;
         }

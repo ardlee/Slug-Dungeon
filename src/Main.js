@@ -1,6 +1,8 @@
 var map;
 var groundLayer;
 var wallLayer;
+var gateLayer;
+var gatecollide;
 
 let config = {
     type: Phaser.CANVAS,
