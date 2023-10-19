@@ -7,7 +7,9 @@
 
 **known bugs**
 - if falling fast enough, it is possible to fall through map although unlikely  
-if happens please just refresh the page  
+if happens please just refresh the page
+
+https://ardlee.github.io/group11-prototype/ 
   
 
 https://docs.google.com/document/d/1gliYOayjT6n_th6F4gnk4Ibm-ahZK2YJ2-Rutdn-w7Y/edit?usp=sharing 
