@@ -60,7 +60,7 @@ class Play extends Phaser.Scene{
         gatecollide = this.physics.add.collider(gateLayer, this.player);
 
         //gravity
-        this.physics.world.gravity.y = 1000;
+        this.physics.world.gravity.y = 700;
         this.physics.world.enable(this.player);
         // this.physics.world.createDebugGraphic();
 
@@ -111,7 +111,7 @@ class Play extends Phaser.Scene{
         
         // player will jump up if on the floor
         if (keyW.isDown && this.player.body.onFloor()) {
-            this.player.setVelocityY(-500);     
+            this.player.setVelocityY(-400);     
         }
         else if (keyW.isDown && this.player.body.blocked.right){
             this.player.angle = -90;
