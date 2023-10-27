@@ -5,9 +5,6 @@
 - Use A and D keys to move left and right
 - Find the key and open the gate to the treasure room
 
-**known bugs**
-- if falling fast enough, it is possible to fall through map although unlikely  
-if happens please just refresh the page
 
 https://ardlee.github.io/group11-prototype/ 
   
