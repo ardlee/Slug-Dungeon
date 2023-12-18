@@ -6,7 +6,7 @@
 - Find the key and open the gate to the treasure room
 
 
-https://ardlee.github.io/group11-prototype/ 
+https://ardlee.github.io/Slug-Dungeon/ 
   
 
 https://docs.google.com/document/d/1gliYOayjT6n_th6F4gnk4Ibm-ahZK2YJ2-Rutdn-w7Y/edit?usp=sharing 
